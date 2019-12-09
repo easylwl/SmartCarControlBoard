@@ -39,6 +39,9 @@ typedef float          FP32;
 typedef double         FP64;   
 
 
+ 
+
+
 //数据宽度类型
 typedef enum{
     DATA_W8=0,	// 8位宽度

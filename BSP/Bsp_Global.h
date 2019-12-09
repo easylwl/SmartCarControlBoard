@@ -14,6 +14,7 @@
 
 
 void BSP_Init(void);
+void UsbLedLight(unsigned char onoff);
 
 
 #endif

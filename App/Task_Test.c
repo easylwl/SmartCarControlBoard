@@ -114,7 +114,7 @@ void Task_RS232(void *pdata)
 	
 	while(1)
 	{
-		GetSensorV(&sensorv);
+		//GetSensorV(&sensorv);
 		//OSMboxPost(sqSendMsg,&sensorv);
 		r = -1;
 	
@@ -307,10 +307,7 @@ void Task_RS232(void *pdata)
 			orgasm_cooling_remain_seconds -= 1;
 		}
 
-		if(next_play_level < 100)
-		{
-			OSMboxPost(sqMp3PlayMsg, &cmdtest);
-		}
+	
 		
 		OSTimeDlyHMSM(0, 0, 0, 50);//50ms
 	}
@@ -332,8 +329,8 @@ void Task_SenSor(void *pdata)
 	OSSemPend(TaskStartSem,0, &os_err);
 	while(1)
 	{  
-		GetSensorV(&sensorv);
-		OSMboxPost(sqSendMsg,&sensorv);
+		//GetSensorV(&sensorv);
+	//	OSMboxPost(sqSendMsg,&sensorv);
 		/*if (sensorv.boob_left_pro_touch==Bit_RESET ||
 			sensorv.boob_left_vot_touch==Bit_RESET ||
 			sensorv.boob_right_pro_touch==Bit_RESET ||

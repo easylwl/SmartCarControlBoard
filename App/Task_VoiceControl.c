@@ -5,7 +5,7 @@
 #include "exchangeSpeaker.h"
 #include	 "Task_VoiceControl.h"
 #include "main.h"
-#include "pwm.h"
+#include "motor.h"
 #include "SCI.h"
 #include "optoswitch.h"
 int current_play_level;
@@ -19,16 +19,7 @@ OS_STK Stk_Task_VoiceCtrl[TASK_VOICECTRL_STK_SIZE];
 
 void play_mp3()
 {
-	if(next_play_level < 100)
-	{
-		char current_mp3_file[30];
-		current_play_level = next_play_level;
-		strcpy(current_mp3_file, next_mp3_file);
-		send_mp3_command(0x42, current_mp3_file);
-		SetMP3Voice;  //切换MP3声源
-		SetMoter(MouthMoter,499);		
-		speaker_st = Speaker_playingMP3;
-	}
+
 }
 
 
@@ -76,39 +67,7 @@ void Task_VoiceControl(void *pdata)
 						}
 					}
 				}
-			else if (voice_cmd==Mp3_play_finish )
-				{
-				//检测MP3播放状态
-				if (GPIO_ReadInputDataBit(MP3_ISBUSY)==Bit_SET) 
-					{
-					speaker_st=Speaker_finishMP3;
-					SetMoter(MouthMoter,100);
-					while (GetOptoSwitch(0)!=Bit_RESET)
-						{
-							OSTimeDlyHMSM(0, 0,0, 5);
-						}
-					SetMoter(MouthMoter,0);	
-					}
-				}
-			else if (voice_cmd==BT_To_play)
-				{
-				if (speaker_st==Speaker_idle) 
-					{
-					speaker_st=Speaker_playingBtVoice;
-					SetMoter(MouthMoter,499);
-					}
-				}
-			else if (voice_cmd==Stop_Voice)
-				{
-				speaker_st=Speaker_idle;
-				SetMoter(MouthMoter,100);
-				while (GetOptoSwitch(MOUTHOPTO)!=Bit_RESET)
-					{
-						OSTimeDlyHMSM(0, 0,0, 5);
-					}
-				SetMoter(MouthMoter,0);	
-				}
-			}
+
 		else
 			{
 			if (speaker_st!=Speaker_idle &&(GPIO_ReadInputDataBit(MP3_ISBUSY)==Bit_SET) )
@@ -117,6 +76,7 @@ void Task_VoiceControl(void *pdata)
 				SetBTVoice;
 				}
 			}
+		}
 		OSTimeDlyHMSM(0, 0, 0, 100);//100ms
 	}
 }

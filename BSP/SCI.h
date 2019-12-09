@@ -35,7 +35,9 @@ static void RS485_Delay(uint32_t nCount);
 
 void RS232_Send_Data(unsigned char *send_buff,unsigned int length);
 void RS232_DMA_Send(unsigned char *send_buff,unsigned int length);
-void USART_232_Configuration(void);
+void USART1_Configuration(void);
+void USART3_Configuration(void);
+
 static void RS232_Delay(uint32_t nCount);
 
 void qj005_send_data(char send_buff[],u8 command_length);//void qj005_send_data(unsigned char *send_buff,unsigned int length);

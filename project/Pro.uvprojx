@@ -334,7 +334,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,__FPU_PRESENT=1,ARM_MATH_CM4,STM32F40_41xxx</Define>
               <Undefine></Undefine>
-              <IncludePath>..\App;..\BSP;..\Module;..\CMSIS\Core;..\UCOS\Source;..\UCOS\Port;..\CMSIS\STM32F4xx_DSP_StdPeriph_Lib_V1.8.0\Libraries\STM32F4xx_StdPeriph_Driver\inc</IncludePath>
+              <IncludePath>..\App;..\BSP;..\Module;..\CMSIS\Core;..\UCOS\Source;..\UCOS\Port;..\CMSIS\Driver</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -424,19 +424,9 @@
               <FilePath>..\BSP\SCI.c</FilePath>
             </File>
             <File>
-              <FileName>yidaosensor.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\yidaosensor.c</FilePath>
-            </File>
-            <File>
               <FileName>adc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\BSP\adc.c</FilePath>
-            </File>
-            <File>
-              <FileName>pwm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\pwm.c</FilePath>
             </File>
             <File>
               <FileName>exchangeSpeaker.C</FileName>
@@ -447,6 +437,16 @@
               <FileName>optoswitch.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\BSP\optoswitch.c</FilePath>
+            </File>
+            <File>
+              <FileName>motor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\motor.c</FilePath>
+            </File>
+            <File>
+              <FileName>steeringengine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\steeringengine.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -529,14 +529,14 @@
               <FilePath>..\CMSIS\Core\arm_cortexM4lf_math.lib</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\CMSIS\STM32F4xx_DSP_StdPeriph_Lib_V1.8.0\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h</FilePath>
-            </File>
-            <File>
               <FileName>system_stm32f4xx.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\CMSIS\Core\system_stm32f4xx.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\CMSIS\Core\stm32f4xx.h</FilePath>
             </File>
           </Files>
         </Group>

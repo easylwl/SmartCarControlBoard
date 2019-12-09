@@ -1,7 +1,7 @@
 #include "M_Global.h"
 #include "adc.h"
 #include "Task_VoiceControl.h"
-#include "pwm.h"
+#include "motor.h"
 #include "optoswitch.h"
 volatile unsigned char voiceadc_dma_flag = 0;
 
@@ -124,22 +124,7 @@ void Task_Adc(void *pdata)
 	while (1)
 	{
 		voice_adc_data=Get_Adc(ADC_Channel_2);
-		if (speaker_st==Speaker_idle && voice_adc_data>ADC_Threshold)
-			{
-				speaker_st=Speaker_playingBtVoice;
-				SetMoter(MouthMoter,499);	
-			}
-		else if(speaker_st==Speaker_playingBtVoice && voice_adc_data<=ADC_Threshold)
-			{
-			speaker_st=Speaker_idle;
-			SetMoter(MouthMoter,100);
-			while (GetOptoSwitch(MOUTHOPTO)!=Bit_RESET)
-				{
-					OSTimeDlyHMSM(0, 0,0, 5);
-				}
-			SetMoter(MouthMoter,0);	
-			}		
-		
+
 		OSTimeDlyHMSM(0, 0, 0, 10);//10ms
 	}
 }

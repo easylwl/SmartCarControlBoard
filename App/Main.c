@@ -9,10 +9,20 @@
 #include "exchangeSpeaker.h"
 #include "Task_VoiceControl.h"
 #include "adc.h"
-#include "pwm.h"
+#include "motor.h"
+#include "steeringengine.h"
 #include "optoswitch.h"
 
+
+
+
 OS_EVENT* TaskStartSem;
+
+
+
+
+
+
 char next_mp3_file[30];
 int next_play_level = 100;
 
@@ -21,8 +31,10 @@ int main(void)
 {
 	//初始化板子
 	BSP_Init();
+	
 	//初始化系统
 	OSInit();
+
 	//创建启动任务
 	OSTaskCreate(	Task_StartUp,               		    				//指向任务代码的指针
                   	(void *) 0,												//任务开始执行时，传递给任务的参数的指针
@@ -53,8 +65,20 @@ void Task_StartUp(void *pdata)
 
 	//初始化UCOS时钟
 	//OS_TICKS_PER_SEC 为 UCOS-II 每秒嘀嗒数
-
 	SysTick_Config(SystemCoreClock/OS_TICKS_PER_SEC - 1);
+	//创建任务同步启动信号
+	TaskStartSem=OSSemCreate(0);
+	u32 pwmduty=500;
+	u8 dierct=0;
+	//Creat Motor control message query
+	
+
+	//建立任务
+	//OSTaskCreate(Task_Motor, (void *)0, &Stk_Task_MOTOR[TASK_MOTOR_STK_SIZE-1], OS_USER_PRIO_GET(3));   
+	//OSTaskCreate(Task_RS232, (void *)0, &Stk_Task_RS232[TASK_TEST_RS232_STK_SIZE-1], OS_USER_PRIO_GET(4));
+	
+//	OSTaskCreate(Task_SenSor, (void *)0, &Stk_sensor[TASK_TEST_CAN2_STK_SIZE-1], OS_USER_PRIO_GET(5));
+	//OSTaskCreate(Task_Adc, (void *)0, &Stk_adc[TASK_TEST_ADC_STK_SIZE-1], OS_USER_PRIO_GET(6));    
 
 
 
@@ -71,28 +95,20 @@ void Task_StartUp(void *pdata)
 	//				(OS_STK *)&Stk_TaskXxx[TASK_XXX_STK_SIZE - 1],			//分配给任务的堆栈的栈顶指针   从顶向下递减
 	//				(INT8U) OS_USER_PRIO_GET(N));							//分配给任务的优先级  
 	
-	//创建任务同步启动信号
-	TaskStartSem=OSSemCreate(0);
 
-	//建立两个测试任务
-	
-	OSTaskCreate(Task_VoiceControl, (void *)0, &Stk_Task_VoiceCtrl[TASK_VOICECTRL_STK_SIZE-1], OS_USER_PRIO_GET(3));   
-	OSTaskCreate(Task_RS232, (void *)0, &Stk_Task_RS232[TASK_TEST_RS232_STK_SIZE-1], OS_USER_PRIO_GET(4));
-	
-//	OSTaskCreate(Task_SenSor, (void *)0, &Stk_sensor[TASK_TEST_CAN2_STK_SIZE-1], OS_USER_PRIO_GET(5));
-    OSTaskCreate(Task_Adc, (void *)0, &Stk_adc[TASK_TEST_ADC_STK_SIZE-1], OS_USER_PRIO_GET(6));    
 	while(1)
 	{
-	//3秒眨眼一次
-		SetMoter(EyeMoter,499);	
-		OSTimeDlyHMSM(0, 0,0, 400);//0.4s
-		SetMoter(EyeMoter,100);
-		while (GetOptoSwitch(1)!=Bit_RESET)
+	if (dierct==0) 
 		{
-			OSTimeDlyHMSM(0, 0,0, 5);
+		pwmduty+=1;
+		if (pwmduty>=750) dierct=1;
 		}
-		SetMoter(EyeMoter,0);	
-		OSTimeDlyHMSM(0, 0,3, 0);//3s
-		
+	else
+		{
+		pwmduty-=1;
+		if (pwmduty<=250) dierct=0;
+		}
+	TIM_SetCompare1(TIM3,pwmduty);	//修改比较值，修改占空比
+	OSTimeDlyHMSM(0, 0,0, 20);//0.3s
 	}
 }

@@ -1,0 +1,8 @@
+---- TaskStartSem Matches (7 in 6 files) ----
+Main.c (App) line 19 : OS_EVENT* TaskStartSem;
+Task_StartUp in Main.c (App) : 	TaskStartSem=OSSemCreate(0);
+main.h (BSP) line 50 : extern OS_EVENT* TaskStartSem;
+Task_SenSor in Task_ConMaxiGo.c (App) : 	OSSemPend(TaskStartSem,0, &os_err);
+Task_Motor in Task_Motor.c (App) : 	OSSemPend(TaskStartSem,0, &os_err);
+Task_SenSor in Task_Test.c (App) : 	OSSemPend(TaskStartSem,0, &os_err);
+Task_VoiceControl in Task_VoiceControl.c (App) : 	OSSemPost(TaskStartSem);

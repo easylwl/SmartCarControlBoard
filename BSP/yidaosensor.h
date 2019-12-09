@@ -5,9 +5,10 @@
 编 写 人：
 注    意：
 ***********************************************************************/
-#include "stdint.h"
+
 #ifndef _YINDAOSENSOR_H_
 #define _YINDAOSENSOR_H_
+#include "stdint.h"
 
 
 #define CUNT_SEN_PRO			GPIOC , GPIO_Pin_6
@@ -50,6 +51,6 @@ typedef struct YindaoSensor
 	//音频
 	int voice;
 }YindaoSensor;
-void GetSensorV(YindaoSensor * yindaosensor);
-void Sensor_Init(void);
+
+
 #endif

@@ -6,7 +6,6 @@
 �?   意：
 ***********************************************************************/
 #include "stdint.h"
-#include "stdint.h"
 
 #ifndef _OPTOSWITCH_H_
 #define _OPTOSWITCH_H_
